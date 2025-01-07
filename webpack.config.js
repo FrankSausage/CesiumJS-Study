@@ -1,11 +1,13 @@
 const cesiumSource = 'node_modules/cesium/Source';
 const cesiumWorkers = '../Build/Cesium/Workers';
+const cesiumSample = 'SampleData';
 
 const path = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopywebpackPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     mode: 'development',
@@ -37,14 +39,10 @@ module.exports = {
             test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
             use: [ 'url-loader' ]
         }, {
-            test: /\.glb$/,
+            test: /\.(glb|gltf)$/,
             type: 'asset/resource',
             use: [ 'url-loader' ]
-        }, {
-            test: /\.gltf$/,
-            type: 'asset/resource',
-            use: [ 'url-loader' ]
-        }]
+        }, ]
     },
     resolve: {
         alias: {
@@ -61,13 +59,15 @@ module.exports = {
             patterns: [
                 { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
                 { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
-                { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }
+                { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' },
+                { from: path.join(cesiumSample, ), to: 'SampleData'}
             ]
         }),
         new webpack.DefinePlugin({
             // Define relative base path in cesium for loading assets
             CESIUM_BASE_URL: JSON.stringify('')
-        })
+        }),
+        new Dotenv() // .env 환경 변수를 통한 키 값 가져오기
     ],
 };
 
