@@ -25,8 +25,9 @@ module.exports = {
         toUrlUndefined: true
     },
     node: {
-        // Resolve node module use of fs
-        fs: 'empty'
+        __dirname: true,
+        __filename: true,
+        global: true,
     },
     module: {
         rules: [{
@@ -34,6 +35,13 @@ module.exports = {
             use: [ 'style-loader', 'css-loader' ]
         }, {
             test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
+            use: [ 'url-loader' ]
+        }, {
+            test: /\.glb$/,
+            type: 'asset/resource'
+        }, {
+            test: /\.gltf$/,
+            type: 'asset/resource',
             use: [ 'url-loader' ]
         }]
     },
