@@ -38,7 +38,8 @@ module.exports = {
             use: [ 'url-loader' ]
         }, {
             test: /\.glb$/,
-            type: 'asset/resource'
+            type: 'asset/resource',
+            use: [ 'url-loader' ]
         }, {
             test: /\.gltf$/,
             type: 'asset/resource',
